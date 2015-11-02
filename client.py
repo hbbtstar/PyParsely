@@ -12,14 +12,12 @@ class Client(object):
         self.APIKEY = apikey
         self.SECRET = secret
         
-    def get(self, endpoint, meta=None, value=None, **kwargs):
-        ''' gets api results and returns a JSON object. kwargs are interpreted as
-        querystring parameters '''
+    def get(self, endpoint, *args, **kwargs):
+        ''' gets api results and returns a JSON object. Args are interpreted as url endpoints, and 
+        kwargs are interpreted as querystring parameters. '''
         url = self.BASE_URL + endpoint + "/"
-        if meta:
-            url += meta + "/"
-        if value:
-            url += value + "/"
+        for arg in args:
+            url += arg + "/"
         params = {'apikey': self.APIKEY,'secret': self.SECRET}
         params.update(kwargs)
         response = requests.get(url.rstrip('/'), params=params)

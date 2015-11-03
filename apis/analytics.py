@@ -7,16 +7,16 @@ class AnalyticsAPI(object):
     def __init__(self, client):
         self._client = client
         
-    def posts(self):
+    def posts(self, **kwargs):
         ''' returns a list of posts '''
         post_list = []
-        posts_resp = self._client.get('analytics', 'posts')
+        posts_resp = self._client.get('analytics', 'posts', **kwargs)
         print posts_resp['data']
         for entry in posts_resp['data']:
             post_list.append(Post(self._client, entry['url'], **entry))
         return post_list
             
-            
+    
         
     
     def post(self, post_url):
